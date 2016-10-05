@@ -57,14 +57,17 @@ class AmqpPublishTest extends AmqpTestCase
         $this->assertEquals(['success' => true, 'message' => 'Push was successful'], $response->getBody());
 
         // check whether we can get the message from the queue
-        $callback = function($msg){
-            $this->assertJsonStringEqualsJsonString('{"foo": "bar"}', $msg->body);
-        };
+        $callback = $this->getMock('stdClass', array('callback'));
+        $callback->expects($this->once())
+            ->with($this->callback(function($msg){
+                $this->assertJsonStringEqualsJsonString('{"foo": "bar"}', $msg->body);
+            }))
+            ->method('callback');
 
         $channel = $this->connection->channel();
         $channel->queue_declare('foo_queue', false, true, false, false);
         $channel->basic_qos(null, 1, null);
-        $channel->basic_consume('foo_queue', '', false, false, false, false, $callback);
+        $channel->basic_consume('foo_queue', '', false, false, false, false, [$callback, 'callback']);
         $channel->close();
     }
 
