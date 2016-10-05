@@ -1,0 +1,32 @@
+{
+  "name": "fusio/adapter-amqp",
+  "description": "Handles communication with a message queue",
+  "homepage": "http://fusio-project.org",
+  "keywords": ["fusio-adapter"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Christoph Kappestein",
+      "email": "christoph.kappestein@gmail.com",
+      "homepage": "http://christoph.kappestein.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "php-amqplib/php-amqplib": "^2.6",
+    "fusio/engine": "^0.4@dev"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fusio\\Adapter\\Amqp\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Fusio\\Adapter\\Amqp\\Tests\\": "tests/"
+    }
+  }
+}
