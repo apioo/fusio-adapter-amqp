@@ -64,7 +64,7 @@ class AmqpPublishTest extends AmqpTestCase
         $channel = $this->connection->channel();
         $channel->queue_declare('foo_queue', false, true, false, false);
         $channel->basic_qos(null, 1, null);
-        $channel->basic_consume('task_queue', '', false, false, false, false, $callback);
+        $channel->basic_consume('foo_queue', '', false, false, false, false, $callback);
         $channel->close();
     }
 
