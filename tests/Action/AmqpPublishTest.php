@@ -25,10 +25,9 @@ use Fusio\Adapter\Amqp\Action\AmqpPublish;
 use Fusio\Adapter\Amqp\Tests\AmqpTestCase;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
-use Fusio\Engine\Model\Action;
 use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
-use Fusio\Engine\Test\CallbackAction;
+use PhpAmqpLib\Message\AMQPMessage;
 use PSX\Record\Record;
 
 /**
@@ -60,8 +59,9 @@ class AmqpPublishTest extends AmqpTestCase
         $callback = $this->getMock('stdClass', array('callback'));
         $callback->expects($this->once())
             ->method('callback')
-            ->with($this->callback(function($msg){
-                $this->assertJsonStringEqualsJsonString('{"foo": "bar"}', $msg->body);
+            ->with($this->callback(function(AMQPMessage $msg){
+                $this->assertJsonStringEqualsJsonString('{"foo": "bar"}', $msg->getBody());
+                return true;
             }));
 
         $channel = $this->connection->channel();

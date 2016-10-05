@@ -1,6 +1,6 @@
 <?php
 
-namespace Fusio\Adapter\Memcache;
+namespace Fusio\Adapter\Amqp;
 
 use Fusio\Engine\AdapterInterface;
 
