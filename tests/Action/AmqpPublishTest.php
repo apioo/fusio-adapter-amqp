@@ -68,7 +68,6 @@ class AmqpPublishTest extends AmqpTestCase
         $channel->queue_declare('foo_queue', false, true, false, false);
         $channel->basic_qos(null, 1, null);
         $channel->basic_consume('foo_queue', '', false, false, false, false, [$callback, 'callback']);
-        $channel->close();
     }
 
     public function testGetForm()

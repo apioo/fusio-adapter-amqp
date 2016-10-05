@@ -74,7 +74,6 @@ class AmqpPublish implements ActionInterface
             $message = new AMQPMessage($body, ['content_type' => $writer->getContentType(), 'delivery_mode' => 2]);
 
             $channel->basic_publish($message, '', $queue);
-            $channel->close();
 
             return $this->response->build(200, [], array(
                 'success' => true,
