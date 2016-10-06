@@ -27,7 +27,6 @@ use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
-use PhpAmqpLib\Message\AMQPMessage;
 use PSX\Record\Record;
 
 /**
