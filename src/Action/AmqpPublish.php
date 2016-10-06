@@ -21,15 +21,13 @@
 
 namespace Fusio\Adapter\Amqp\Action;
 
-use Fusio\Engine\ActionInterface;
-use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\ActionAbstract;
 use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Response\FactoryInterface as ResponseFactoryInterface;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PSX\Data\Writer;
@@ -41,20 +39,8 @@ use PSX\Data\Writer;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class AmqpPublish implements ActionInterface
+class AmqpPublish extends ActionAbstract
 {
-    /**
-     * @Inject
-     * @var \Fusio\Engine\ConnectorInterface
-     */
-    protected $connector;
-
-    /**
-     * @Inject
-     * @var \Fusio\Engine\Response\FactoryInterface
-     */
-    protected $response;
-
     public function getName()
     {
         return 'Amqp-Publish';
@@ -69,9 +55,8 @@ class AmqpPublish implements ActionInterface
             $channel = $connection->channel();
             $channel->queue_declare($queue, false, true, false, false);
 
-            $writer  = new Writer\Json();
-            $body    = $writer->write($request->getBody());
-            $message = new AMQPMessage($body, ['content_type' => $writer->getContentType(), 'delivery_mode' => 2]);
+            $body    = $this->jsonProcessor->write($request->getBody());
+            $message = new AMQPMessage($body, ['content_type' => 'application/json', 'delivery_mode' => 2]);
 
             $channel->basic_publish($message, '', $queue);
             $channel->close();
@@ -89,15 +74,5 @@ class AmqpPublish implements ActionInterface
     {
         $builder->add($elementFactory->newConnection('connection', 'Connection', 'The RabbitMQ connection which should be used'));
         $builder->add($elementFactory->newInput('queue', 'Queue', 'text', 'The name of the queue'));
-    }
-
-    public function setConnector(ConnectorInterface $connector)
-    {
-        $this->connector = $connector;
-    }
-
-    public function setResponse(ResponseFactoryInterface $response)
-    {
-        $this->response = $response;
     }
 }
