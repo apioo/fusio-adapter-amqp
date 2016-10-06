@@ -1,6 +1,6 @@
 {
   "name": "fusio/adapter-amqp",
-  "description": "Handles communication with a message queue",
+  "description": "Handles communication with a AMQP message queue",
   "homepage": "http://fusio-project.org",
   "keywords": ["fusio-adapter"],
   "license": "AGPL-3.0",
