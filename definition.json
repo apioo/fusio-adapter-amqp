@@ -1,6 +1,6 @@
 {
   "actionClass": [
-    "Fusio\\Adapter\\Amqp\\Action\\AmqpPush"
+    "Fusio\\Adapter\\Amqp\\Action\\AmqpPublish"
   ],
   "connectionClass": [
     "Fusio\\Adapter\\Amqp\\Connection\\Amqp"
