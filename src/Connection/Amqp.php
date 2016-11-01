@@ -43,7 +43,7 @@ class Amqp implements ConnectionInterface
 
     /**
      * @param \Fusio\Engine\ParametersInterface $config
-     * @return \MongoDB
+     * @return \PhpAmqpLib\Connection\AMQPStreamConnection
      */
     public function getConnection(ParametersInterface $config)
     {
@@ -52,7 +52,7 @@ class Amqp implements ConnectionInterface
             $config->get('port') ?: 5672,
             $config->get('user'),
             $config->get('password'),
-            $config->get('vhost')
+            $config->get('vhost') ?: '/'
         );
     }
 
