@@ -21,6 +21,7 @@
 
 namespace Fusio\Adapter\Amqp\Connection;
 
+use Fusio\Engine\Connection\PingableInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
@@ -34,7 +35,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Amqp implements ConnectionInterface
+class Amqp implements ConnectionInterface, PingableInterface
 {
     public function getName()
     {
@@ -63,5 +64,14 @@ class Amqp implements ConnectionInterface
         $builder->add($elementFactory->newInput('user', 'User', 'text', 'The login string used to authenticate with the AMQP broker'));
         $builder->add($elementFactory->newInput('password', 'Password', 'password', 'The password string used to authenticate with the AMQP broker'));
         $builder->add($elementFactory->newInput('vhost', 'VHost', 'text', 'The virtual host to use on the AMQP broker'));
+    }
+
+    public function ping($connection)
+    {
+        if ($connection instanceof AMQPStreamConnection) {
+            return $connection->isConnected();
+        } else {
+            return false;
+        }
     }
 }

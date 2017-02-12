@@ -42,8 +42,8 @@ class AmqpTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConnection()
     {
-        /** @var Amqp $connection */
-        $connection = $this->getConnectionFactory()->factory(Amqp::class);
+        /** @var Amqp $connectionFactory */
+        $connectionFactory = $this->getConnectionFactory()->factory(Amqp::class);
 
         $config = new Parameters([
             'host'     => '127.0.0.1',
@@ -53,9 +53,9 @@ class AmqpTest extends \PHPUnit_Framework_TestCase
             'vhost'    => '/'
         ]);
 
-        $client = $connection->getConnection($config);
+        $connection = $connectionFactory->getConnection($config);
 
-        $this->assertInstanceOf(AMQPStreamConnection::class, $client);
+        $this->assertInstanceOf(AMQPStreamConnection::class, $connection);
     }
 
     public function testConfigure()
@@ -75,5 +75,23 @@ class AmqpTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Input::class, $elements[2]);
         $this->assertInstanceOf(Input::class, $elements[3]);
         $this->assertInstanceOf(Input::class, $elements[4]);
+    }
+
+    public function testPing()
+    {
+        /** @var Amqp $connectionFactory */
+        $connectionFactory = $this->getConnectionFactory()->factory(Amqp::class);
+
+        $config = new Parameters([
+            'host'     => '127.0.0.1',
+            'port'     => 5672,
+            'user'     => 'guest',
+            'password' => 'guest',
+            'vhost'    => '/'
+        ]);
+
+        $connection = $connectionFactory->getConnection($config);
+
+        $this->assertTrue($connectionFactory->ping($connection));
     }
 }
