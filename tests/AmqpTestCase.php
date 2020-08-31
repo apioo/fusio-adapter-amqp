@@ -69,17 +69,6 @@ abstract class AmqpTestCase extends TestCase
         $this->getConnectionRepository()->add($connection);
     }
 
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        if (self::$hasConnection) {
-            if ($this->connection instanceof \Memcached) {
-                $this->connection->flush();
-            }
-        }
-    }
-
     protected function newConnection()
     {
         $connector = new Amqp();
