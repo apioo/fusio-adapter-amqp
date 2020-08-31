@@ -46,10 +46,10 @@ abstract class AmqpTestCase extends TestCase
      */
     protected $connection;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::$hasConnection) {
-            $this->markTestSkipped('Memcache connection not available');
+            $this->markTestSkipped('AMQP connection not available');
         }
 
         if (!$this->connection) {
