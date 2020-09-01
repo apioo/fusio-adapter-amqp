@@ -6,6 +6,10 @@ php:
 sudo: false
 services:
   - rabbitmq
+addons:
+  apt:
+    packages:
+      - rabbitmq-server
 before_install:
   - if [ $TRAVIS_PHP_VERSION == '7.2' ]; then phpenv config-rm xdebug.ini; fi;
 install:
