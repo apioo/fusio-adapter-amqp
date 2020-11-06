@@ -33,8 +33,7 @@ use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
- * Action which allows you to create an API endpoint based on any database
- * table
+ * Action which publishes a message to a queue
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -44,7 +43,7 @@ class AmqpPublish extends ActionAbstract
 {
     public function getName()
     {
-        return 'AMQP-Send';
+        return 'AMQP-Publish';
     }
 
     public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
