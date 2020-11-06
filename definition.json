@@ -1,4 +1,7 @@
 {
+  "actionClass": [
+    "Fusio\\Adapter\\Amqp\\Action\\AmqpPublish"
+  ],
   "connectionClass": [
     "Fusio\\Adapter\\Amqp\\Connection\\Amqp"
   ]

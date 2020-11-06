@@ -39,7 +39,7 @@ class Amqp implements ConnectionInterface, PingableInterface
 {
     public function getName()
     {
-        return 'Amqp';
+        return 'AMQP';
     }
 
     /**
