@@ -40,7 +40,7 @@ use PhpAmqpLib\Message\AMQPMessage;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class SmtpSend extends ActionAbstract
+class AmqpPublish extends ActionAbstract
 {
     public function getName()
     {
