@@ -15,6 +15,11 @@ jobs:
     services:
       rabbitmq:
         image: rabbitmq
+        options: >-
+          --health-cmd "rabbitmq-diagnostics -q ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
           - 5672:5672
     steps:
