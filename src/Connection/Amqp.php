@@ -33,20 +33,16 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
- * @link    http://fusio-project.org
+ * @link    https://www.fusio-project.org/
  */
 class Amqp implements ConnectionInterface, PingableInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'AMQP';
     }
 
-    /**
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return \PhpAmqpLib\Connection\AMQPStreamConnection
-     */
-    public function getConnection(ParametersInterface $config)
+    public function getConnection(ParametersInterface $config): AMQPStreamConnection
     {
         return new AMQPStreamConnection(
             $config->get('host'),
@@ -57,7 +53,7 @@ class Amqp implements ConnectionInterface, PingableInterface
         );
     }
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newInput('host', 'Host', 'text', 'The IP or hostname of the RabbitMQ server'));
         $builder->add($elementFactory->newInput('port', 'Port', 'number', 'The port used to connect to the AMQP broker. The port default is 5672'));
@@ -66,7 +62,7 @@ class Amqp implements ConnectionInterface, PingableInterface
         $builder->add($elementFactory->newInput('vhost', 'VHost', 'text', 'The virtual host to use on the AMQP broker'));
     }
 
-    public function ping($connection)
+    public function ping(mixed $connection): bool
     {
         if ($connection instanceof AMQPStreamConnection) {
             return $connection->isConnected();
