@@ -69,7 +69,7 @@ class AmqpTest extends TestCase
 
         $this->assertInstanceOf(Container::class, $builder->getForm());
 
-        $elements = $builder->getForm()->getProperty('element');
+        $elements = $builder->getForm()->getElements();
         $this->assertEquals(5, count($elements));
         $this->assertInstanceOf(Input::class, $elements[0]);
         $this->assertInstanceOf(Input::class, $elements[1]);
