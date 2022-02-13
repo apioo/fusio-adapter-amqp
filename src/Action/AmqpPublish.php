@@ -94,7 +94,7 @@ class AmqpPublish extends ActionAbstract
 
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
-        $builder->add($elementFactory->newConnection('connection', 'Connection', 'The AMQP connection which should be used'));
+        $builder->add($elementFactory->newConnection('connection', 'Connection', 'The AMQP connection which should be used. Click <a ng-click="help.showDialog(\'api/action/amqp-publish\')">here</a> for more information.'));
     }
 
     protected function getConnection(ParametersInterface $configuration): AMQPStreamConnection
