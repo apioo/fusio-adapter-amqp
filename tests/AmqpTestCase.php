@@ -21,6 +21,7 @@
 
 namespace Fusio\Adapter\Amqp\Tests;
 
+use Fusio\Adapter\Amqp\Action\AmqpPublish;
 use Fusio\Adapter\Amqp\Connection\Amqp;
 use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\Model\Connection;
@@ -47,6 +48,7 @@ abstract class AmqpTestCase extends TestCase
     protected function configure(Runtime $runtime, Container $container): void
     {
         $container->set(Amqp::class, new Amqp());
+        $container->set(AmqpPublish::class, new AmqpPublish($runtime));
     }
 
     protected function setUp(): void
