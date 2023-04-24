@@ -22,12 +22,14 @@
 namespace Fusio\Adapter\Amqp\Tests;
 
 use Fusio\Adapter\Amqp\Connection\Amqp;
+use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * AmqpTestCase
@@ -41,6 +43,11 @@ abstract class AmqpTestCase extends TestCase
     use EngineTestCaseTrait;
 
     protected ?AMQPStreamConnection $connection = null;
+
+    protected function configure(Runtime $runtime, Container $container): void
+    {
+        $container->set(Amqp::class, new Amqp());
+    }
 
     protected function setUp(): void
     {
@@ -72,7 +79,7 @@ abstract class AmqpTestCase extends TestCase
 
             return $connection;
         } catch (\Exception $e) {
-            $this->markTestSkipped('Memcache connection not available');
+            $this->markTestSkipped('AMQP connection not available');
         }
     }
 }

@@ -22,13 +22,12 @@
 namespace Fusio\Adapter\Amqp\Tests\Connection;
 
 use Fusio\Adapter\Amqp\Connection\Amqp;
+use Fusio\Adapter\Amqp\Tests\AmqpTestCase;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Form\Element\Input;
 use Fusio\Engine\Parameters;
-use Fusio\Engine\Test\EngineTestCaseTrait;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PHPUnit\Framework\TestCase;
 
 /**
  * AmqpTest
@@ -37,10 +36,8 @@ use PHPUnit\Framework\TestCase;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org/
  */
-class AmqpTest extends TestCase
+class AmqpTest extends AmqpTestCase
 {
-    use EngineTestCaseTrait;
-
     public function testGetConnection()
     {
         /** @var Amqp $connectionFactory */
