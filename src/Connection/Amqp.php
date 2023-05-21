@@ -22,7 +22,7 @@
 namespace Fusio\Adapter\Amqp\Connection;
 
 use Fusio\Engine\Connection\PingableInterface;
-use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\ConnectionAbstract;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
@@ -35,7 +35,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org/
  */
-class Amqp implements ConnectionInterface, PingableInterface
+class Amqp extends ConnectionAbstract implements PingableInterface
 {
     public function getName(): string
     {
