@@ -21,16 +21,14 @@
 
 namespace Fusio\Adapter\Amqp\Tests;
 
-use Fusio\Adapter\Amqp\Action\AmqpPublish;
+use Fusio\Adapter\Amqp\Adapter;
 use Fusio\Adapter\Amqp\Connection\Amqp;
-use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * AmqpTestCase
@@ -44,12 +42,6 @@ abstract class AmqpTestCase extends TestCase
     use EngineTestCaseTrait;
 
     protected ?AMQPStreamConnection $connection = null;
-
-    protected function configure(Runtime $runtime, Container $container): void
-    {
-        $container->set(Amqp::class, new Amqp());
-        $container->set(AmqpPublish::class, new AmqpPublish($runtime));
-    }
 
     protected function setUp(): void
     {
@@ -83,5 +75,10 @@ abstract class AmqpTestCase extends TestCase
         } catch (\Exception $e) {
             $this->markTestSkipped('AMQP connection not available');
         }
+    }
+
+    protected function getAdapterClass(): string
+    {
+        return Adapter::class;
     }
 }
