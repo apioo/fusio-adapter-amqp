@@ -49,8 +49,20 @@ class AmqpPublish extends ActionAbstract
     {
         $connection = $this->getConnection($configuration);
 
-        $exchange = $request->get('exchange');
-        $queue = $request->get('queue');
+        $exchange = $configuration->get('exchange');
+        if (empty($exchange)) {
+            $exchange = $request->get('exchange');
+        }
+
+        $queue = $configuration->get('queue');
+        if (empty($queue)) {
+            $queue = $request->get('queue');
+            $contentType = $request->get('contentType');
+            $body = $request->get('body');
+        } else {
+            $contentType = 'application/json';
+            $body = \json_encode($request->getPayload());
+        }
 
         $channel = $connection->channel();
 
@@ -74,9 +86,6 @@ class AmqpPublish extends ActionAbstract
 
         $channel->queue_bind($queue, $exchange);
 
-        $contentType = $request->get('contentType');
-        $body = $request->get('body');
-
         $message = new AMQPMessage($body, [
             'content_type' => $contentType,
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
@@ -94,6 +103,8 @@ class AmqpPublish extends ActionAbstract
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newConnection('connection', 'Connection', 'The AMQP connection which should be used'));
+        $builder->add($elementFactory->newInput('exchange', 'Exchange', 'text', 'The exchange'));
+        $builder->add($elementFactory->newInput('queue', 'Queue', 'text', 'The queue'));
     }
 
     protected function getConnection(ParametersInterface $configuration): AMQPStreamConnection
