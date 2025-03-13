@@ -30,6 +30,7 @@ use Fusio\Engine\RequestInterface;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Json\Parser;
 
 /**
  * Action which publishes a message to a queue
@@ -56,12 +57,12 @@ class AmqpPublish extends ActionAbstract
 
         $queue = $configuration->get('queue');
         if (empty($queue)) {
-            $queue = $request->get('queue');
-            $contentType = $request->get('contentType');
-            $body = $request->get('body');
+            $queue = (string) $request->get('queue');
+            $contentType = (string) $request->get('contentType');
+            $body = (string) $request->get('body');
         } else {
             $contentType = 'application/json';
-            $body = \json_encode($request->getPayload());
+            $body = Parser::encode($request->getPayload());
         }
 
         $channel = $connection->channel();
