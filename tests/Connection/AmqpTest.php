@@ -37,7 +37,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
  */
 class AmqpTest extends AmqpTestCase
 {
-    public function testGetConnection()
+    public function testGetConnection(): void
     {
         /** @var Amqp $connectionFactory */
         $connectionFactory = $this->getConnectionFactory()->factory(Amqp::class);
@@ -55,7 +55,7 @@ class AmqpTest extends AmqpTestCase
         $this->assertInstanceOf(AMQPStreamConnection::class, $connection);
     }
 
-    public function testConfigure()
+    public function testConfigure(): void
     {
         $connection = $this->getConnectionFactory()->factory(Amqp::class);
         $builder    = new Builder();
@@ -74,7 +74,7 @@ class AmqpTest extends AmqpTestCase
         $this->assertInstanceOf(Input::class, $elements[4]);
     }
 
-    public function testPing()
+    public function testPing(): void
     {
         /** @var Amqp $connectionFactory */
         $connectionFactory = $this->getConnectionFactory()->factory(Amqp::class);
