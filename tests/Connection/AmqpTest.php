@@ -22,6 +22,7 @@ namespace Fusio\Adapter\Amqp\Tests\Connection;
 
 use Fusio\Adapter\Amqp\Connection\Amqp;
 use Fusio\Adapter\Amqp\Tests\AmqpTestCase;
+use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Form\Element\Input;
@@ -60,6 +61,8 @@ class AmqpTest extends AmqpTestCase
         $connection = $this->getConnectionFactory()->factory(Amqp::class);
         $builder    = new Builder();
         $factory    = $this->getFormElementFactory();
+
+        $this->assertInstanceOf(ConfigurableInterface::class, $connection);
 
         $connection->configure($builder, $factory);
 
